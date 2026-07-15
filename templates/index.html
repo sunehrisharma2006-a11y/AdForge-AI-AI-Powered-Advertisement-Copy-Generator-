@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdForge AI — Workspace Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --panel-bg: rgba(17, 24, 39, 0.7);
+            --border-glow: rgba(34, 211, 238, 0.2);
+            --accent-cyan: #22d3ee;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .workspace-container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .workspace-container { grid-template-columns: 1fr; }
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h1, h2, h3 { color: #ffffff; margin-top: 0; }
+        .accent-header { color: var(--accent-cyan); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
+
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem; }
+        
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+            border-radius: 8px;
+            color: #ffffff;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+        }
+        input:focus, textarea:focus { outline: 1px solid var(--accent-cyan); }
+
+        .grid-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .selectable-box {
+            background: rgba(31, 41, 55, 0.4);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+        }
+
+        .selectable-box.active {
+            background: rgba(34, 211, 238, 0.15);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--accent-cyan);
+            color: #0b0f19;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Generated Outputs Layout Rules */
+        .variation-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+        }
+
+        .meta-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .block-text { margin-bottom: 12px; white-space: pre-wrap; font-size: 0.95rem; line-height: 1.5; }
+
+        .tag-pill {
+            display: inline-block;
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent-cyan);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div style="width: 100%; max-width: 1200px;">
+    <div>
+        <h1 style="margin-bottom: 2px;">AdForge AI</h1>
+        <div class="accent-header"><i class="fa-solid fa-microchip"></i> LLaMA 3.3 Production Mirror Active</div>
+    </div>
+
+    <div class="workspace-container">
+        <div class="panel">
+            <h2>Product Brief Blueprint</h2>
+            <form id="generationForm">
+                <div class="form-group">
+                    <label>Product / Brand Name *</label>
+                    <input type="text" id="product_name" placeholder="e.g., NovaSleep Pro" required>
+                </div>
+                <div class="form-group">
+                    <label>Core Description *</label>
+                    <textarea id="product_description" rows="3" placeholder="Describe the utility or special value..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Target Audience / Buyer Persona</label>
+                    <input type="text" id="audience" placeholder="e.g., Remote professionals, audiophiles">
+                </div>
+                <div class="form-group">
+                    <label>Unique Selling Propositions (USPs)</label>
+                    <input type="text" id="usps" placeholder="e.g., 40hr battery life, active noise cancellation">
+                </div>
+                <div class="form-group">
+                    <label>Ad Copy Variations Count</label>
+                    <select id="variations">
+                        <option value="1">1 Variation</option>
+                        <option value="2" selected>2 Variations</option>
+                        <option value="3">3 Variations</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Brand Voice Persona</label>
+                    <div class="grid-options" id="toneGrid">
+                        <div class="selectable-box active" data-value="professional"><i class="fa-solid fa-briefcase"></i><br>Professional</div>
+                        <div class="selectable-box" data-value="playful"><i class="fa-solid fa-face-smile"></i><br>Playful</div>
+                        <div class="selectable-box" data-value="luxury"><i class="fa-solid fa-gem"></i><br>Luxury</div>
+                        <div class="selectable-box" data-value="urgent"><i class="fa-solid fa-bolt"></i><br>Urgent</div>
+                        <div class="selectable-box" data-value="emotional"><i class="fa-solid fa-heart"></i><br>Emotional</div>
+                        <div class="selectable-box" data-value="minimalist"><i class="fa-solid fa-circle"></i><br>Minimalist</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Platforms</label>
+                    <div class="grid-options" id="platformGrid">
+                        <div class="selectable-box active" data-value="instagram"><i class="fa-brands fa-instagram"></i><br>Instagram</div>
+                        <div class="selectable-box" data-value="google"><i class="fa-brands fa-google"></i><br>Google Ads</div>
+                        <div class="selectable-box" data-value="facebook"><i class="fa-brands fa-facebook"></i><br>Facebook</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span id="btnText">Generate Ad Copy</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="panel">
+            <h2>Generated Creative Output Canvas</h2>
+            <div id="outputLoading" style="display: none; color: var(--accent-cyan);"><i class="fa-solid fa-spinner fa-spin"></i> Processing variants...</div>
+            <div id="canvasDisplayPlaceholder" style="color: var(--text-muted);">
+                Configure your campaign variables on the left panel brief form, then execute generation to render structured content output views here.
+            </div>
+            <div id="outputContentContainer"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Grid Selection Actions Core Handles
+    function setupGridClicks(gridId, allowMultiple = false) {
+        const grid = document.getElementById(gridId);
+        grid.querySelectorAll('.selectable-box').forEach(box => {
+            box.addEventListener('click', () => {
+                if (!allowMultiple) {
+                    grid.querySelectorAll('.selectable-box').forEach(b => b.classList.remove('active'));
+                    box.classList.add('active');
+                } else {
+                    box.classList.toggle('active');
+                }
+            });
+        });
+    }
+    setupGridClicks('toneGrid', false);
+    setupGridClicks('platformGrid', true);
+
+    // Lifecycle processing loop
+    document.getElementById('generationForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const activePlatforms = Array.from(document.getElementById('platformGrid').querySelectorAll('.selectable-box.active')).map(b => b.dataset.value);
+        if(activePlatforms.length === 0) {
+            alert("Please select at least one target platform!");
+            return;
+        }
+
+        const payload = {
+            product_name: document.getElementById('product_name').value,
+            product_description: document.getElementById('product_description').value,
+            audience: document.getElementById('audience').value,
+            usps: document.getElementById('usps').value,
+            variations: document.getElementById('variations').value,
+            tone: document.getElementById('toneGrid').querySelector('.selectable-box.active').dataset.value,
+            platforms: activePlatforms
+        };
+
+        document.getElementById('canvasDisplayPlaceholder').style.display = 'none';
+        document.getElementById('outputLoading').style.display = 'block';
+        document.getElementById('outputContentContainer').innerHTML = '';
+
+        try {
+            const res = await fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            document.getElementById('outputLoading').style.display = 'none';
+
+            if(data.error) {
+                document.getElementById('outputContentContainer').innerHTML = `<p style="color: #ef4444;">${data.error}</p>`;
+                return;
+            }
+
+            // Build dynamic display nodes parsing emojis and tags structure natively
+            let htmlPayload = '';
+
+            if (data.slogans && data.slogans.length > 0) {
+                htmlPayload += `<h3>Suggested Slogans</h3><ul>` + data.slogans.map(s => `<li><strong>${s}</strong></li>`).join('') + `</ul><hr style="border-color:rgba(255,255,255,0.1); margin:20px 0;">`;
+            }
+
+            const variationsObj = data.ad_variations || {};
+            for (const [platform, variants] of Object.entries(variationsObj)) {
+                htmlPayload += `<h3 style="text-transform: capitalize; color: #ffffff;"><i class="fa-brands fa-${platform === 'google' ? 'google' : platform}"></i> ${platform} Variations</h3>`;
+                
+                variants.forEach((v, index) => {
+                    htmlPayload += `<div class="variation-card">`;
+                    htmlPayload += `<div class="meta-tag">Variation ${index + 1}</div>`;
+                    
+                    if (platform === 'instagram') {
+                        if(v.hook) htmlPayload += `<div class="block-text"><strong>Hook:</strong> ${v.hook}</div>`;
+                        if(v.emoji_caption) htmlPayload += `<div class="block-text">${v.emoji_caption}</div>`;
+                        if(v.hashtags) {
+                            htmlPayload += `<div>` + v.hashtags.map(t => `<span class="tag-pill">#${t.replace('#','')}</span>`).join('') + `</div>`;
+                        }
+                        if(v.cta_text) htmlPayload += `<div class="block-text" style="margin-top:10px; color:var(--accent-cyan)"><strong>CTA:</strong> ${v.cta_text}</div>`;
+                    } else if (platform === 'facebook') {
+                        if(v.primary_text) htmlPayload += `<div class="block-text">${v.primary_text}</div>`;
+                        if(v.headline) htmlPayload += `<div class="block-text"><strong>Headline:</strong> ${v.headline}</div>`;
+                        if(v.link_description) htmlPayload += `<div class="block-text" style="color:var(--text-muted)">${v.link_description}</div>`;
+                    } else if (platform === 'google') {
+                        if(v.headlines) htmlPayload += `<div class="block-text"><strong>Headlines:</strong> ${v.headlines.join(' | ')}</div>`;
+                        if(v.descriptions) htmlPayload += `<div class="block-text"><strong>Description:</strong> ${v.descriptions.join(' ')}</div>`;
+                    }
+                    
+                    htmlPayload += `</div>`;
+                });
+            }
+
+            document.getElementById('outputContentContainer').innerHTML = htmlPayload;
+
+        } catch (err) {
+            document.getElementById('outputLoading').style.display = 'none';
+            document.getElementById('outputContentContainer').innerHTML = `<p style="color: #ef4444;">Network pipeline exception: ${err.message}</p>`;
+        }
+    });
+</script>
+</body>
+</html>
