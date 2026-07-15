@@ -29,3 +29,7 @@ User Interface (HTML Form)
 ↓ Flask Backend (app.py) 
 ↓ Groq API 
 ↓ Generated Advertisement Copy
+
+# *Development*
+
+Sunehri Sharma 
