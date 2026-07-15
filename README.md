@@ -1,7 +1,7 @@
 # AdForge-AI-AI-Powered-Advertisement-Copy-Generator-
 AdForge AI is an AI-powered advertisement copy generator that helps users create marketing content for different platforms.
 
-Features
+# Features
 
 Ad copy generation
 
@@ -11,7 +11,7 @@ AI-powered content creation
 
 User-friendly interface
 
-*Technology Used*
+# *Technology Used*
 
 Python
 
@@ -23,7 +23,7 @@ HTML
 
 CSS
 
-*Architecture:*
+# *Architecture:*
 
 User Interface (HTML Form) 
 ↓ Flask Backend (app.py) 
