@@ -6,12 +6,14 @@ Ad copy generation
 Multiple platform support
 AI-powered content creation
 User-friendly interface
-Technology Used
+
+*Technology Used*
 Python
 Flask
 Groq API
 HTML
 CSS
-Architecture:
+
+*Architecture:*
 
 User Interface (HTML Form) ↓ Flask Backend (app.py) ↓ Groq API ↓ Generated Advertisement Copy
